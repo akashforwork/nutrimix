@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriMix - Fuel Your Day Naturally</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth; /* Smooth scrolling for navigation */
+            background-color: #f8fafc; /* Light blue-gray background - initial color */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            transition: background-color 2s ease-in-out; /* Smooth transition for background color */
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #cbd5e1; /* Gray-300 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #64748b; /* Slate-500 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; /* Slate-600 */
+        }
+
+        /* Animation classes */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-up.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .scale-in.animate {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .slide-in-left.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .slide-in-right.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Gradient button style */
+        .btn-gradient {
+            background-image: linear-gradient(to right, #f97316, #ea580c); /* Orange-500 to Orange-600 */
+            transition: all 0.3s ease;
+        }
+        .btn-gradient:hover {
+            background-image: linear-gradient(to right, #ea580c, #f97316); /* Reverse gradient on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(234, 88, 12, 0.4);
+        }
+
+        /* Card hover effect */
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Section title underline effect */
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: #f97316; /* Orange-500 */
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Hero section specific styles */
+        /* Removed background-image from here as body handles dynamic background */
+        .hero-section {
+            background-color: transparent; /* Ensure hero section background doesn't block body's dynamic color */
+        }
+        .hero-overlay {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.4));
+        }
+
+        /* Input focus style */
+        input:focus, textarea:focus {
+            border-color: #f97316 !important; /* Orange-500 */
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.3) !important; /* Orange-500 with transparency */
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed w-full bg-white shadow-lg py-4 z-50 rounded-b-xl">
+        <div class="container mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-8">
+            <!-- Logo -->
+            <a href="#hero" class="flex items-center">
+                <!-- Using a placeholder image for guaranteed visibility -->
+                <img src="https://placehold.co/48x48/F97316/FFFFFF?text=NM" alt="NutriMix Logo" class="h-12 w-auto mr-3 object-contain" style="display: block;">
+                <span class="text-2xl font-bold text-orange-600">NutriMix</span>
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#about" class="text-gray-600 hover:text-orange-600 transition duration-300 font-medium">About</a>
+                <a href="#ingredients" class="text-gray-600 hover:text-orange-600 transition duration-300 font-medium">Ingredients</a>
+                <a href="#benefits" class="text-gray-600 hover:text-orange-600 transition duration-300 font-medium">Benefits</a>
+                <a href="#pricing" class="text-gray-600 hover:text-orange-600 transition duration-300 font-medium">Pricing</a>
+                <a href="#order" class="text-gray-600 hover:text-orange-600 transition duration-300 font-medium">Order Now</a>
+                <a href="#contact" class="text-gray-600 hover:text-orange-600 transition duration-300 font-medium">Contact</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-600 focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-2 mt-2 px-4 rounded-b-lg shadow-md">
+            <a href="#about" class="block py-2 text-gray-700 hover:text-orange-600 transition duration-300 font-medium">About</a>
+            <a href="#ingredients" class="block py-2 text-gray-700 hover:text-orange-600 transition duration-300 font-medium">Ingredients</a>
+            <a href="#benefits" class="block py-2 text-gray-700 hover:text-orange-600 transition duration-300 font-medium">Benefits</a>
+            <a href="#pricing" class="block py-2 text-gray-700 hover:text-orange-600 transition duration-300 font-medium">Pricing</a>
+            <a href="#order" class="block py-2 text-gray-700 hover:text-orange-600 transition duration-300 font-medium">Order Now</a>
+            <a href="#contact" class="block py-2 text-gray-700 hover:text-orange-600 transition duration-300 font-medium">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative h-screen flex items-center justify-center text-center bg-cover bg-center hero-section">
+        <div class="absolute inset-0 hero-overlay"></div>
+        <div class="relative z-10 text-white p-8 rounded-xl max-w-4xl mx-auto fade-in-up">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-4 animate">Fuel Your Day Naturally with <span class="text-orange-300">NutriMix!</span></h1>
+            <p class="text-lg sm:text-xl mb-8 animate" style="animation-delay: 0.2s;">Discover the power of wholesome, traditional protein pieces designed for sustained energy and peak performance.</p>
+            <a href="#order" class="btn-gradient text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition duration-300 inline-block animate" style="animation-delay: 0.4s;">Order Your NutriMix Today!</a>
+        </div>
+    </section>
+
+    <!-- About NutriMix Section -->
+    <section id="about" class="py-20 bg-white px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-8 section-title fade-in-up">About NutriMix</h2>
+            <div class="max-w-3xl mx-auto text-lg text-gray-700 leading-relaxed fade-in-up" style="animation-delay: 0.2s;">
+                <p class="mb-4">NutriMix brings you the goodness of nature in every bite. Our protein pieces are crafted with a blend of traditional, wholesome ingredients, ensuring a delicious and nutritious snack for everyone.</p>
+                <p>Perfect for health-conscious individuals, athletes, busy families, or anyone seeking a natural, plant-based energy boost. NutriMix is more than just a snack; it's a step towards a healthier, more vibrant you.</p>
+            </div>
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="p-8 bg-orange-50 rounded-xl shadow-md card-hover fade-in-up" style="animation-delay: 0.4s;">
+                    <div class="text-5xl text-orange-600 mb-4"><i class="fas fa-leaf"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Natural Ingredients</h3>
+                    <p class="text-gray-600">Made with 100% natural, unprocessed ingredients.</p>
+                </div>
+                <div class="p-8 bg-orange-50 rounded-xl shadow-md card-hover fade-in-up" style="animation-delay: 0.6s;">
+                    <div class="text-5xl text-orange-600 mb-4"><i class="fas fa-heartbeat"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Wholesome Nutrition</h3>
+                    <p class="text-gray-600">Packed with protein, fiber, and essential micronutrients.</p>
+                </div>
+                <div class="p-8 bg-orange-50 rounded-xl shadow-md card-hover fade-in-up" style="animation-delay: 0.8s;">
+                    <div class="text-5xl text-orange-600 mb-4"><i class="fas fa-seedling"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Plant-Based Goodness</h3>
+                    <p class="text-gray-600">A delicious and healthy option for vegetarian and vegan lifestyles.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ingredients Section -->
+    <section id="ingredients" class="py-20 bg-gradient-to-br from-orange-50 to-orange-100 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-12 section-title fade-in-up">Our Wholesome Ingredients</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 max-w-7xl mx-auto">
+                <!-- Ingredient Card Template -->
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover scale-in">
+                    <img src="https://placehold.co/100x100/F97316/FFFFFF?text=Dates+Fruit" alt="Dates" class="mx-auto mb-4 rounded-full border-2 border-orange-200 p-1">
+                    <h3 class="text-xl font-semibold text-gray-800">Dates</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover scale-in" style="animation-delay: 0.05s;">
+                    <img src="https://placehold.co/100x100/F97316/FFFFFF?text=Pistachios+Nuts" alt="Pistachios" class="mx-auto mb-4 rounded-full border-2 border-orange-200 p-1">
+                    <h3 class="text-xl font-semibold text-gray-800">Pistachios</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover scale-in" style="animation-delay: 0.1s;">
+                    <img src="https://placehold.co/100x100/F97316/FFFFFF?text=Poppy+Seeds+Spice" alt="Poppy Seeds" class="mx-auto mb-4 rounded-full border-2 border-orange-200 p-1">
+                    <h3 class="text-xl font-semibold text-gray-800">Poppy Seeds</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover scale-in" style="animation-delay: 0.15s;">
+                    <img src="https://placehold.co/100x100/F97316/FFFFFF?text=Cashews+Nut" alt="Cashews" class="mx-auto mb-4 rounded-full border-2 border-orange-200 p-1">
+                    <h3 class="text-xl font-semibold text-gray-800">Cashews</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover scale-in" style="animation-delay: 0.2s;">
+                    <img src="https://placehold.co/100x100/F97316/FFFFFF?text=Edible+Gum+Resin" alt="Edible Gum" class="mx-auto mb-4 rounded-full border-2 border-orange-200 p-1">
+                    <h3 class="text-xl font-semibold text-gray-800">Edible Gum</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover scale-in" style="animation-delay: 0.25s;">
+                    <img src="https://placehold.co/100x100/F97316/FFFFFF?text=Pumpkin+Seeds+Snack" alt="Pumpkin Seeds" class="mx-auto mb-4 rounded-full border-2 border-orange-200 p-1">
+                    <h3 class="text-xl font-semibold text-gray-800">Pumpkin Seeds</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover scale-in" style="animation-delay: 0.3s;">
+                    <img src="https://placehold.co/100x100/F97316/FFFFFF?text=Walnuts+Nut" alt="Walnuts" class="mx-auto mb-4 rounded-full border-2 border-orange-200 p-1">
+                    <h3 class="text-xl font-semibold text-gray-800">Walnuts</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover scale-in" style="animation-delay: 0.35s;">
+                    <img src="https://placehold.co/100x100/F97316/FFFFFF?text=Dry+Coconut+Flakes" alt="Dry Coconut" class="mx-auto mb-4 rounded-full border-2 border-orange-200 p-1">
+                    <h3 class="text-xl font-semibold text-gray-800">Dry Coconut</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover scale-in" style="animation-delay: 0.4s;">
+                    <img src="https://placehold.co/100x100/F97316/FFFFFF?text=Cardamom+Spice" alt="Cardamom" class="mx-auto mb-4 rounded-full border-2 border-orange-200 p-1">
+                    <h3 class="text-xl font-semibold text-gray-800">Cardamom</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover scale-in" style="animation-delay: 0.45s;">
+                    <img src="https://placehold.co/100x100/F97316/FFFFFF?text=Raisins+Dried+Fruit" alt="Raisins" class="mx-auto mb-4 rounded-full border-2 border-orange-200 p-1">
+                    <h3 class="text-xl font-semibold text-gray-800">Raisins</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover scale-in" style="animation-delay: 0.5s;">
+                    <img src="https://placehold.co/100x100/F97316/FFFFFF?text=Almonds+Nut" alt="Almonds" class="mx-auto mb-4 rounded-full border-2 border-orange-200 p-1">
+                    <h3 class="text-xl font-semibold text-gray-800">Almonds</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover scale-in" style="animation-delay: 0.55s;">
+                    <img src="https://placehold.co/100x100/F97316/FFFFFF?text=Jaggery+Sweetener" alt="Jaggery" class="mx-auto mb-4 rounded-full border-2 border-orange-200 p-1">
+                    <h3 class="text-xl font-semibold text-gray-800">Jaggery</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nutritional Profile Section -->
+    <section id="nutrition" class="py-20 bg-white px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-12 section-title fade-in-up">Nutritional Powerhouse (Per Piece)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <div class="p-8 bg-green-50 rounded-xl shadow-md card-hover scale-in">
+                    <div class="text-6xl text-green-600 mb-4"><i class="fas fa-dumbbell"></i></div>
+                    <h3 class="text-2xl font-bold text-gray-800">Protein</h3>
+                    <p class="text-4xl font-extrabold text-green-700 mt-2">~2.16g</p>
+                </div>
+                <div class="p-8 bg-blue-50 rounded-xl shadow-md card-hover scale-in" style="animation-delay: 0.2s;">
+                    <div class="text-6xl text-blue-600 mb-4"><i class="fas fa-carrot"></i></div>
+                    <h3 class="text-2xl font-bold text-gray-800">Fiber</h3>
+                    <p class="text-4xl font-extrabold text-blue-700 mt-2">~1.79g</p>
+                </div>
+                <div class="p-8 bg-yellow-50 rounded-xl shadow-md card-hover scale-in" style="animation-delay: 0.4s;">
+                    <div class="text-6xl text-yellow-600 mb-4"><i class="fas fa-fire"></i></div>
+                    <h3 class="text-2xl font-bold text-gray-800">Calories</h3>
+                    <p class="text-4xl font-extrabold text-yellow-700 mt-2">~100-120 kcal</p>
+                </div>
+            </div>
+            <p class="text-lg text-gray-700 mt-10 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.6s;">
+                NutriMix is a fiber-rich, cholesterol-free, plant-based snack packed with diverse micronutrients, offering sustained energy to power your day!
+            </p>
+        </div>
+    </section>
+
+    <!-- Health Benefits Section -->
+    <section id="benefits" class="py-20 bg-gradient-to-br from-orange-50 to-red-50 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-12 section-title fade-in-up">Unlock a World of Health Benefits with NutriMix</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Benefit Card Template -->
+                <div class="p-8 bg-white rounded-xl shadow-lg card-hover slide-in-left">
+                    <div class="text-5xl text-red-600 mb-4"><i class="fas fa-bolt"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Energy Boost</h3>
+                    <p class="text-gray-600">Provides sustained energy, perfect for pre/post-workout or a midday pick-me-up.</p>
+                </div>
+                <div class="p-8 bg-white rounded-xl shadow-lg card-hover slide-in-left" style="animation-delay: 0.1s;">
+                    <div class="text-5xl text-red-600 mb-4"><i class="fas fa-heart"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Heart Health Support</h3>
+                    <p class="text-gray-600">Ingredients contribute to cardiovascular well-being.</p>
+                </div>
+                <div class="p-8 bg-white rounded-xl shadow-lg card-hover slide-in-left" style="animation-delay: 0.2s;">
+                    <div class="text-5xl text-red-600 mb-4"><i class="fas fa-stomach"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Digestive Harmony</h3>
+                    <p class="text-gray-600">Rich in fiber, aiding healthy digestion and gut function.</p>
+                </div>
+                <div class="p-8 bg-white rounded-xl shadow-lg card-hover slide-in-right" style="animation-delay: 0.3s;">
+                    <div class="text-5xl text-red-600 mb-4"><i class="fas fa-bone"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Bone Strength</h3>
+                    <p class="text-gray-600">Contains minerals vital for strong bones.</p>
+                </div>
+                <div class="p-8 bg-white rounded-xl shadow-lg card-hover slide-in-right" style="animation-delay: 0.4s;">
+                    <div class="text-5xl text-red-600 mb-4"><i class="fas fa-shield-alt"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Antioxidant Properties</h3>
+                    <p class="text-gray-600">Helps protect your body from oxidative stress.</p>
+                </div>
+                <div class="p-8 bg-white rounded-xl shadow-lg card-hover slide-in-right" style="animation-delay: 0.5s;">
+                    <div class="text-5xl text-red-600 mb-4"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Immunity Support</h3>
+                    <p class="text-gray-600">Boosts your body's natural defenses.</p>
+                </div>
+                <div class="p-8 bg-white rounded-xl shadow-lg card-hover slide-in-left" style="animation-delay: 0.6s;">
+                    <div class="text-5xl text-red-600 mb-4"><i class="fas fa-weight-scale"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Weight Management Aid</h3>
+                    <p class="text-gray-600">Fiber and protein content helps with satiety and portion control.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Audience Section -->
+    <section id="audience" class="py-20 bg-white px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-12 section-title fade-in-up">Who is NutriMix For?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="p-8 bg-purple-50 rounded-xl shadow-md card-hover scale-in">
+                    <div class="text-5xl text-purple-600 mb-4"><i class="fas fa-leaf"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Health-Conscious Individuals</h3>
+                    <p class="text-gray-600">For those who prioritize natural, wholesome nutrition in their daily diet.</p>
+                </div>
+                <div class="p-8 bg-purple-50 rounded-xl shadow-md card-hover scale-in" style="animation-delay: 0.2s;">
+                    <div class="text-5xl text-purple-600 mb-4"><i class="fas fa-running"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Gym-Goers & Athletes</h3>
+                    <p class="text-gray-600">Ideal for pre/post-workout fuel and recovery, providing essential protein and energy.</p>
+                </div>
+                <div class="p-8 bg-purple-50 rounded-xl shadow-md card-hover scale-in" style="animation-delay: 0.4s;">
+                    <div class="text-5xl text-purple-600 mb-4"><i class="fas fa-family"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Families Seeking Healthy Snacks</h3>
+                    <p class="text-gray-600">A nutritious and delicious option for kids and adults alike.</p>
+                </div>
+                <div class="p-8 bg-purple-50 rounded-xl shadow-md card-hover scale-in" style="animation-delay: 0.6s;">
+                    <div class="text-5xl text-purple-600 mb-4"><i class="fas fa-seedling"></i></div>
+                    <h3 class="text-xl font-semibold text-gray-800">Vegetarian & Vegan Friendly</h3>
+                    <p class="text-gray-600">A plant-based snack that aligns with diverse dietary preferences.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-gray-50 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto text-center max-w-2xl">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-12 section-title fade-in-up">Our Pricing</h2>
+            <div class="bg-white p-10 rounded-xl shadow-lg fade-in-up" style="animation-delay: 0.2s;">
+                <p class="text-4xl font-extrabold text-orange-600 mb-4">
+                    <span class="text-2xl align-top">$</span>25<span class="text-xl font-normal"> / piece</span>
+                </p>
+                <p class="text-lg text-gray-700">Get your delicious and nutritious NutriMix pieces today!</p>
+                <p class="text-md text-gray-500 mt-4">Minimum order quantity for online orders is 10 pieces.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Now Section -->
+    <section id="order" class="py-20 bg-gradient-to-br from-orange-100 to-yellow-100 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto text-center max-w-2xl">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-12 section-title fade-in-up">Get Your NutriMix Today!</h2>
+            <p class="text-lg text-gray-700 mb-8 fade-in-up" style="animation-delay: 0.2s;">Fill out the form below to place your order. We'll get back to you shortly!</p>
+
+            <!-- Formspree Integration:
+                 - action: Set to the unique Formspree URL provided by the user.
+                 - method: Must be POST.
+                 - hidden inputs: Used by Formspree for reply-to email and email subject.
+                 - The browser will handle the submission directly to Formspree.
+                 - Client-side JavaScript for submission is removed as Formspree handles it.
+            -->
+            <form id="order-form" action="https://formspree.io/f/mwpqoqqk" method="POST" class="bg-white p-10 rounded-xl shadow-lg fade-in-up" style="animation-delay: 0.4s;">
+                <div class="mb-6 text-left">
+                    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Your Name:</label>
+                    <input type="text" id="name" name="name" class="shadow-sm border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200" placeholder="John Doe" required>
+                </div>
+                <div class="mb-6 text-left">
+                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Your Email:</label>
+                    <input type="email" id="email" name="email" class="shadow-sm border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200" placeholder="john.doe@example.com" required>
+                    <!-- Hidden input for Formspree to set reply-to email -->
+                    <input type="hidden" name="_replyto" id="replyto-email">
+                </div>
+                <div class="mb-6 text-left">
+                    <label for="phone" class="block text-gray-700 text-sm font-bold mb-2">Phone Number (Optional):</label>
+                    <input type="tel" id="phone" name="phone" class="shadow-sm border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200" placeholder="+91 98765 43210">
+                </div>
+                <div class="mb-6 text-left">
+                    <label for="quantity" class="block text-gray-700 text-sm font-bold mb-2">Quantity (Number of NutriMix pieces):</label>
+                    <input type="number" id="quantity" name="quantity" min="10" value="10" class="shadow-sm border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200" required>
+                </div>
+                <div class="mb-6 text-left">
+                    <label for="notes" class="block text-gray-700 text-sm font-bold mb-2">Special Instructions (Optional):</label>
+                    <textarea id="notes" name="notes" rows="4" class="shadow-sm border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200" placeholder="Any specific delivery instructions or requests..."></textarea>
+                </div>
+                <button type="submit" class="btn-gradient text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition duration-300 w-full">Place Order</button>
+                <!-- Removed the Formspree note as requested -->
+                <!-- Hidden input for Formspree to set the email subject -->
+                <input type="hidden" name="_subject" value="New NutriMix Order!">
+                <!-- Optional: Redirect to a thank you page after submission. Uncomment and replace with your page URL. -->
+                <!-- <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html"> -->
+            </form>
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contact" class="py-20 bg-white px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto text-center max-w-xl">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-8 section-title fade-in-up">Connect With Us</h2>
+            <p class="text-lg text-gray-700 mb-8 fade-in-up" style="animation-delay: 0.2s;">Have questions or want to learn more about NutriMix? Reach out to us!</p>
+            <div class="space-y-6 text-lg text-gray-700 fade-in-up" style="animation-delay: 0.4s;">
+                <p><i class="fas fa-phone-alt text-orange-600 mr-3"></i> Phone: <a href="tel:+918073388585" class="text-orange-600 hover:underline font-medium">+91 80733 88585</a></p>
+            </div>
+            <div class="flex justify-center space-x-6 mt-10 fade-in-up" style="animation-delay: 0.6s;">
+                <a href="#" class="text-gray-600 hover:text-orange-600 text-3xl transition duration-300"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-gray-600 hover:text-orange-600 text-3xl transition duration-300"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-600 hover:text-orange-600 text-3xl transition duration-300"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-gray-600 hover:text-orange-600 text-3xl transition duration-300"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 text-center rounded-t-xl">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <p>&copy; <span id="current-year"></span> NutriMix. All rights reserved.</p>
+            <p class="mt-2 text-sm">Crafted with nature's finest ingredients for your well-being.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                // Close mobile menu after clicking a link
+                if (mobileMenu.classList.contains('flex')) {
+                    mobileMenu.classList.remove('flex');
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('flex');
+            mobileMenu.classList.toggle('flex-col'); // Ensure it stacks vertically
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                    observer.unobserve(entry.target); // Stop observing once animated
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up, .scale-in, .slide-in-left, .slide-in-right').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Form submission is now handled by Formspree directly via the 'action' attribute.
+        // The JavaScript below is for client-side validation *before* submission.
+        const orderForm = document.getElementById('order-form');
+        const quantityInput = document.getElementById('quantity');
+        const emailInput = document.getElementById('email');
+        const replyToEmailInput = document.getElementById('replyto-email');
+
+        orderForm.addEventListener('submit', function(event) {
+            // Client-side validation for quantity
+            if (parseInt(quantityInput.value, 10) < 10) {
+                event.preventDefault(); // Prevent form submission
+                console.error("Order quantity cannot be less than 10 pieces. Please order 10 or more.");
+                // In a real application, you'd show a more user-friendly on-page message
+                // instead of a console.error().
+            }
+
+            // Set the _replyto hidden field with the customer's email
+            // This allows you to directly reply to the customer from your Formspree email notification.
+            replyToEmailInput.value = emailInput.value;
+        });
+
+        // Dynamic Background Color Script
+        const colors = [
+            '#FFD1DC', // Pastel Pink
+            '#ADD8E6', // Light Blue
+            '#90EE90', // Light Green
+            '#FFEFD5', // Papaya Whip (light peach)
+            '#E6E6FA', // Lavender
+            '#FFE4E1'  // Misty Rose (very light pink)
+        ];
+        let currentColorIndex = 0;
+        const bodyElement = document.body;
+
+        function changeBackgroundColor() {
+            currentColorIndex = (currentColorIndex + 1) % colors.length;
+            bodyElement.style.backgroundColor = colors[currentColorIndex];
+        }
+
+        // Change color every 5 seconds (5000 milliseconds)
+        setInterval(changeBackgroundColor, 5000);
+    </script>
+</body>
+</html>
